@@ -1,0 +1,264 @@
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# Author: BlackNevada;   Title: Comandos utiles by BlackNevada;   Version: 0.2.14;   Date: 2024/12/14
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+#Section=Index:Begin
+
+#Section=Index:End
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# COMANDOS GENERALES
+
+Buscar el principio de un documento de texto con este formato:
+grep -E "# Author: [[:alnum:][:space:].]+;[[:space:]]+Title: [[:alnum:][:space:].]+;[[:space:]]+Version: [[:alnum:][:space:].]+;[[:space:]]+Date: [0-9]{4}/[0-9]{2}/[0-9]{2}" *
+o bien, para buscar en varios directorios:
+grep -rE "# Author: [[:alnum:][:space:].]+;[[:space:]]+Title: [[:alnum:][:space:].]+;[[:space:]]+Version: [[:alnum:][:space:].]+;[[:space:]]+Date: [0-9]{4}/[0-9]{2}/[0-9]{2}" *
+
+Convertirse en superusuario/root
+sudo -i
+
+Copiar un archivo de un lugar a otro, copiar una carpeta con archivos de un lugar a otro
+sudo cp /carpeta/archivo  /carpeta_destino
+sudo cp -r /carpeta  /carpeta_destino
+sudo cp -r '/home/blackog/Descargas/2300+ Fonts Pack By Webdevtrick.com'  /usr/share/fonts
+
+Borrar archivos
+rm [opción] NombreArchivoOCarpeta
+    [opción]:
+     -r borra recursivamente con confirmación
+     -rf borra recursivamente sin confimación
+     -d borra un directorio vacío
+
+Instalar archivo .deb
+sudo dpkg -i "package_name.deb"
+
+Correr archivo de comandos shell, archivos tipo .sh
+./nombreArchivo.sh
+sh nombreArchivo.sh
+bash nombreArchivo.sh
+
+Correr más de un comando a la vez
+Opción1: Puedes separar los comandos con un salto de línea. Para eso, escríbelos todos en un archivo de texto y luego copialos a la terminal
+Opción2: Comando1 && Comando2
+	 Comando1&&Comando2
+
+Añadir repositorio flathub a flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# COMANDOS DE NAVEGACION DE DIRECTORIOS
+cd <carpeta>
+misma carpeta: cd .
+arriba:        cd ..
+home:          cd ~
+root:          cd /
+
+mkdir <nueva carpeta>
+touch <nuevo archivo>
+cat <archivo a ver>
+nano <archivo a escribir>
+vi <archivo a escribir>
+con vim instalado: vim <archivo a escribir>
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# COMPRIMIR Y DESCOMPRIMIR ARCHIVOS
+
+Comprimir a tar.gz
+tar czvf archivo.tar.gz /archivo/carpeta/*
+tar czvf tarea-n-2021040331.tar.gz tarea-n-2021040331
+tar czvf AE-2-2021040331.tar.gz actividadExtra-2-2021040331
+
+Descomprimir tar.gz y tar.bz2
+tar xvf archivo.tar.gz
+tar xf archivo.tar.gz -C /nombre/carpeta/descomprimido
+tar xvjf archivo.tar.bz2
+tar xvjf py4renpy-6.8.0.tar.bz2
+tar es la operación, archivo.tar.gz es el objetivo, xvf son las opciones de la operación
+opciones:
+	x: extraer, se usa -xf
+	v: verbose, ver descripción
+	f: file, el próximo comando después de -f será el objetivo
+	j: tar.bz2 en lugar de tar.gz
+	t: list, lista los archivos dentro del objetivo, se usa -tf
+
+
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# INSTALAR Y DESINSTALAR CON APT
+
+Lista de paquetes instalados y no instalados
+sudo apt list
+
+Solo instalados
+sudo apt list --installed
+
+Usa el comando grep sobre la lista de paquetes para encontrar los que tienen cierto nombre
+sudo apt list --installed | grep <nombre>
+
+Desinstalar
+sudo apt-get remove <nombre>
+sudo apt-get purge <nombre>
+
+Autodesinstalar dependencias desocupadas
+sudo apt autoremove
+
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# SNAP
+
+snap help
+snap list
+snap remove <app>
+snap remove purge <app>
+ 
+Reparar error de que firefox no funciona sin reiniciar el pc
+1-. snap disable firefox
+2-. snap enable firefox
+Se puede hacer los mismo con cualquier programa snap buscando su nombre con snap list
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# DOCKER
+
+docker-compose build
+docker-compose up
+docker-compose down
+
+listar contenedores
+sudo docker ps
+
+ls contenedores+ocultos
+sudo docker ps -a
+
+sudo docker rm <nombre contenedor>
+sudo docker stop <nombre contenedor>
+
+si no te deja ocupar stop o rm, remueve todos los procesos deconocidos de apparmor, alguno de esos es un dangling de docker que está causando interferencia
+sudo aa-remove-unknown
+
+Detener todos los contenedores
+docker stop $(docker ps -a -q)
+docker ps --format "{{.Names}}" | xargs -I {} docker stop {}
+
+Borrar definitivamente todos los elementos de docker, imágenes incluidas (nuke). Puede ser útil si tienes que eliminar un schema en un contenedor, dado que no puedes hacerlo manualmente a través de la linea de comandos.
+docker system prune --all --volumes
+docker volume rm <volume_name>
+
+Entrar a la terminal bash de un contenedor
+docker exec -it <contenedor> /bin/bash
+
+Error starting userland proxy: listen tcp4 0.0.0.0:3306: bind: address already in use
+sudo kill `sudo lsof -t -i:3306`
+sudo kill `sudo lsof -t -i:8080`
+sudo kill `sudo lsof -t -i:8000`
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# ERRORES FATALES
+
+Cómo rehacer la lista de paquetes apt (aka, solucionar error con sudo apt-get update)
+Extraído de: https://www.tutorialesubuntu.com/2020/08/01/solucionar-errores-apt-get-update-y-restaurar-repositorios/
+sudo rm /etc/apt/sources.list
+sudo rm /etc/apt/sources.list.d/* -vf
+sudo software-properties-gtk	#elige todo menos código fuente, a menos que también vayas a estar installando código fuente
+sudo apt-get update
+
+Si un paquete está roto, utiliza el primer comando para buscar el paquete roto.
+El segundo comando para editar la lista de paquetes, borra el todo el bloque del paquete en cuestión.
+Y finalmente utiliza el tercero para reparar los paquetes automáticamente.
+sudo dpkg -l
+sudo nano /var/lib/dpkg/status
+sudo apt --fix-broken install
+
+https://itsfoss.com/es/no-se-puede-localizar-el-paquete-ubuntu/
+sudo add-apt-repository universe multiverse
+sudo apt update
+
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# GITHUB
+
+Iniciar proyecto git
+git init
+
+Commit en Git
+git commit -m "grrr, soy Tadeo"
+
+Obtener cambios, subir cambios
+git pull
+git push
+
+Ver status, diferencias, diferencias en archivos e historial de commits
+git status
+git diff BlackFlag..base
+git diff --name-status BlackFlag..base
+git log
+
+Cambiar de rama
+git checkout [<rama>]
+
+Ver archivos contenidos por HEAD
+git ls-files -s
+
+Merge de rebase. Añade los commits de una rama con cambios a una sin cambios.
+Útil si creas un hijo, lo editas sin editar a su padre y luego quieres actualizar al padre
+git rebase [<ramaReceptora>]
+
+El reseteo en git sirve tanto para quitar archivos rastreados por git, como para volver a un estado anterior
+Al volver a un estado anterior, puedes:
+ a) volver al último commit
+ b) deshacer los cambios
+ c) alguna combinación de los dos u otra función
+git reset [<mode>] [<commit>]
+    <mode>:
+        --hard:  Vuelve al <commit> y        deshace los cambios en el Index y        en el directorio de trabajo
+        --soft:  Vuelve al <commit>, pero no deshace los cambios en el Index       ni en el directorio de trabajo
+        --mixed: Vuelve al <commit> y        deshace los cambios en el Index, pero no en el directorio de trabajo
+
+
+
+Fusión: Hay que seguir una serie de pasos para asegurarnos de que se realizará correctamente
+1) Rama donante actualizada:                     git add <file> && git commit -m <""> && git push
+                                         o bien: git pull    si alguien más hizo los cambios
+2) HEAD en la rama de recepción:                 git checkout <rama_recepción>
+3) Cambios de la rama de recepción actualizados: git fetch & git pull
+4) Realizar merge                                git merge <rama_donante>
+
+Definición de algunos conceptos útiles
+    HEAD: Last commit snapshot
+    Index: Proposed next commit snapshot
+    Working Directory: Sandbox
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# VERILOG
+
+iverilog -o check_code tb.v dut.v
+iverilog -g2012 -o check_code tb.v dut.v
+vvp check_code
+
+
+
+//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
+# OTROS
+
+Iniciar entorno anaconda. En el entorno anaconda puedes utilizar Sympy y algunas otras bibliotecas matematicas de python.
+eval "$(/home/blackog/anaconda3/bin/conda shell.bash hook)"
+eval "$(/home/blackog/anaconda3/bin/conda shell.nombre_shell hook)"
+
+Eliminar un programa
+sudo apt-get --purge remove nombreprograma
+
+Correr renpy
+sh renpy.sh
+
+Cambiar el nombre de un usb
+sudo mkfs.msdos -F <tipo> -n <nombre> <device>
+sudo mkfs.msdos -F 32 -n Pingu_Kawai /dev/sdb1
+<tipo>: Arquitectura del dispositivo, 16 o 32. (FAT) Generalmente es 32.
+<nombre>: Nuevo nombre del dispositivo
+<device>: Punto de montaje del dsipositivo, se puede ver en "discos".
+
+Documentación tikz
+https://tikz.dev/tikz-shapes#pgf.midway
+
+Útil para crear una app
+https://askubuntu.com/questions/424908/how-to-create-a-native-application-from-a-shell-script
+
+Hacer que el ejecutable se pueda ejecutar desde cualquier ubicación como si fuese una app
+export PATH=$PATH:</path/to/file>

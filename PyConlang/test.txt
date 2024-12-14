@@ -1,0 +1,9 @@
+V:a/e/i/o/u/á/é/í/ó/ú/à/è/ì/ò/ù
+C:bh/f/fr/fs/k/r/v/y/z
+N:r/s/t/k/z/sd
+E:lu/dVN/que/qua/Vh
+D:rVh-YV
+Y:gy/ny/sh/shy/ch/chy
+W:CVCVN/CVN/EN
+!R:W
+!A:mu/mo
