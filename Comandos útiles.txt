@@ -1,5 +1,5 @@
 //***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
-# Author: BlackNevada;   Title: Comandos utiles by BlackNevada;   Version: 0.2.14;   Date: 2024/12/14
+# Author: BlackNevada;   Title: Comandos utiles by BlackNevada;   Version: 0.2.15;   Date: 2024/12/19
 //***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//***//
 #Section=Index:Begin
 
@@ -50,6 +50,8 @@ misma carpeta: cd .
 arriba:        cd ..
 home:          cd ~
 root:          cd /
+
+cp <origen> <destino>
 
 mkdir <nueva carpeta>
 touch <nuevo archivo>
